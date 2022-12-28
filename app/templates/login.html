@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>User Login</title>
+  </head>
+  <body>
+    <h1>User Login</h1>
+    <form method="POST" action="{{ url_for('login') }}">
+      {{ form.csrf_token }}
+      {{ form.username.label }} {{ form.username }}
+      {% for error in form.username.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+      <br>
+      {{ form.password.label }} {{ form.password }}
+      {% for error in form.password.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+      <br>
+      <input type="submit" value="Login">
+    </form>
+  </body>
+</html>

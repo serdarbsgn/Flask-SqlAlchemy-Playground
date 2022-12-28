@@ -1,0 +1,62 @@
+{% if user %}
+    <head>
+    <title>{{ user }}'s Cart</title>
+    </head>
+    {% else %}
+    <head>
+    <title>Cart</title>
+    </head>
+    {% endif %}
+
+{% if user %}
+      <h1>{{ user }}'s Cart</h1>
+    {% else %}
+      <h1>Cart</h1>
+    {% endif %}
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Total</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in cart_items %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>
+          <form action="/update-cart" method="post">
+            {{ form2.csrf_token }}
+            {{ form2.product_id(value=item.product_id) }}
+            {{ form2.quantity(value=item.quantity) }}
+            <input type="submit" value="Update">
+          
+          </form>
+        </td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.price * item.quantity }}</td>
+        <td>
+          <form action="/remove-from-cart" method="post">
+            {{ form.csrf_token }}
+            {{ form.product_id(value=item.product_id) }}
+            <input type="submit" value="Remove from Cart">
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<p>Total: {{ total }}</p>
+<br>
+<a href="/home">Home</a>
+<br>
+<a href="/checkout">Proceed to checkout</a>
+<br>
+<a href="/market">Browse Market</a>
+<br>
+<a href="/logout">Logout</a>
